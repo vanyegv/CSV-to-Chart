@@ -1,5 +1,5 @@
 import pandas as pd
-import matplotlib
+#import matplotlib
 
 def run():
   data = pd.read_csv('data.csv')
