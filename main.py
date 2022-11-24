@@ -8,12 +8,12 @@ def run():
   
   column1 = input(f'Introduce 2 column names to filter \n{titles} \n=> ')
   column2 = input('=> ')
-  chart = input('\nIntroduce type of chart\nbar chart\tpie chart\n=> ')
+  type_chart = input('\nIntroduce type of chart\nbar chart\tpie chart\n=> ')
 
-  if (column1 in titles) and (column2 in titles) and ('pie' in chart or 'bar' in chart):
+  if (column1 in titles) and (column2 in titles) and ('pie' in type_chart or 'bar' in type_chart):
     value1 = list(data[column1])
     value2 = list(data[column2])
-    generate_charts(type,value1,value2)
+    generate_charts(type_chart,value1,value2,column1,column2)
     
   else:
     print('Selection not valid\n')
