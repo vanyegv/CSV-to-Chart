@@ -6,7 +6,7 @@ import sys
 import subprocess
 
 app = FastAPI()   # API instance
-# Introduce as parameter the file to be open
+# Introduce as parameter the file to be open as follow '/api?path=path_to_csv'
 @app.get("/api")
 async def assign_variables(path='./datasets/data.csv'):
   # Read the CSV
