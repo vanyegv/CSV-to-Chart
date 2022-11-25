@@ -10,22 +10,34 @@ app = FastAPI()
 def assign_variables():
   data = pd.read_csv('./datasets/data.csv')
   titles = list(data.head(0))
+  menu = ''
+  
+  for title in titles:
+    menu += f'<option value="{title}">{title}</option>'
+
   html_content = f'''
   <html>
     <body>
-      <p>Select a column a column</p>
-      <p>{titles}</p>
+      <p>Select a column</p>
         <form action='/chart'>
-        <label for="column1">First column:</label><br>
-        <input type="text" id="column1_" name="column1_"><br>
+
+        <label for="column1">Identifier</label><br>
+        <select name="column1_"><br>
+          {menu}
+        </select><br><br>
         
-        <label for="column2">Second Column:</label><br>
-        <input type="text" id="column2_" name="column2_"><br>
-        
+        <label for="column2_">Values:</label><br>
+        <select name="column2_"><br>
+          {menu}
+        </select><br><br>
+
         <label for="type_chart">Type Chart:</label><br>
-        <input type="text" id="type_chart_" name="type_chart_"><br>
-        
-        <input type="submit" value="Submit">
+        <select name="type_chart_"><br>
+          <option value="bar chart">bar chart</option><br>
+          <option value="pie chart">pie chart</option><br>
+        </select><br><br>
+
+        <input type="submit" value="Submit"><br>
         </form>
     </body>
   </html>
