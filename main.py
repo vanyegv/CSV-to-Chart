@@ -36,14 +36,9 @@ def assign_variables():
 async def return_chart(column1_,column2_,type_chart_):
   data = pd.read_csv('./datasets/data.csv')
   titles = list(data.head(0))
-  #dict_titles = { n:title[n] for n,title in range(0,len(titles)) }
-  
-  #column1 = input(f'Introduce 2 column names to filter \n{titles} \n=> ')
-  #column2 = input('=> ')
-  #type_chart = input('\nIntroduce type of chart\nbar chart\tpie chart\n=> ')
-  column1 = column1_ #'columna1'
-  column2 = column2_ #'columna2'
-  type_chart = type_chart_#'pie'
+  column1 = column1_ 
+  column2 = column2_ 
+  type_chart = type_chart_
   
   if (column1 in titles) and (column2 in titles) and ('pie' in type_chart or 'bar' in type_chart):
     value1 = list(data[column1])
