@@ -13,6 +13,7 @@ You need to clone into your local repository and start the virtual enviromental 
 Once dowloaded and started virtual enviroment with all dependencies, you have two option to execute the program through the web browser or through the command line: 
 + To execute through the web browser execute as follow to start the server service:
 
+
 	uvicorn main:app --reload
 
 Now, the server is running, open your web browser and type the following URL:
@@ -21,6 +22,7 @@ Now, the server is running, open your web browser and type the following URL:
 
 If you don`t indicate the csv file, a default example data will be uploaded.
 + To execute throught the command line, you can execute as follow:
+
 
 	python3 main.py path_to_csv head_identifier head_values
 
