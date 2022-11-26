@@ -8,7 +8,7 @@ import subprocess
 app = FastAPI()   # API instance
 # Introduce as parameter the file to be open as follow '/api?path=path_to_csv'
 @app.get("/api")
-async def assign_variables(path='./datasets/data.csv'):
+def assign_variables(path='./datasets/data.csv'):
   # Read the CSV
   data = pd.read_csv(path)
   # Define the first row as titles
@@ -80,18 +80,26 @@ def return_chart(head_selection_1,head_selection_2,chart_selection,path):
 
   else:
     print('Selection not valid\n')
-    assign_variables()
+    if __name__ == '__main__':            # Validate if the execution is trough command line or the API
+      raise Exception('Selection not valid')                        # If its command line just return the path to the chart file
+    else:
+      assign_variables()
 
 # Function to be executed by the terminal instead of the web api
 def run():
     # Validate if there isn`t a csv file as parameter
     print(len(sys.argv))
-    if len(sys.argv) == 1:
+    if len(sys.argv) >= 1:
       path='./datasets/data.csv'  #As default it show an example dataset
     else:
       path = sys.argv[1]          # If there is a parameter, then the name is assigned to path
-    # Request to the user introduce a type of chart
-    chart_selection = input(f'\n\tFile Name: {path}\n\tChoose your type of chart \n\tBar chart\tPie chart\n    =>    ').lower()
+    
+    if len(sys.argv) >= 2:
+      chart_selection = sys.argv[2]
+    else:
+      # Request to the user introduce a type of chart
+      chart_selection = input(f'\n\tFile Name: {path}\n\tChoose your type of chart \n\tBar chart\tPie chart\n    =>    ').lower()
+    
     # Validation of the entry information
     if ('bar' not in chart_selection) and ('pie' not in chart_selection):
         print('\n\tInvalid selection')    # In case information is invalid, the funtion will start again
@@ -100,15 +108,20 @@ def run():
         type_chart = 'bar'
     if 'pie' in chart_selection:          # Validate that there is a text pie
         type_chart = 'pie'
-    
-    #Open and read the csv
-    data = pd.read_csv(path)
-    # Define the first row as titles
-    titles = list(data.head(0))
-    # Show and request to the user the columns to be filtered
-    print(f'\n\tChoose the columns to filter\n{titles}')
-    head_selection_1 = input('\nIdentifier    =>    ')
-    head_selection_2 = input('\nValues        =>    ')
+
+    # If there is an column selection into the command, this are introduced as parameter
+    if len(sys.argv) == 5:
+      head_selection_1 = sys.argv[3]
+      head_selection_2 = sys.argv[4]
+    else:
+      #Open and read the csv
+      data = pd.read_csv(path)
+      # Define the first row as titles
+      titles = list(data.head(0))
+      # Show and request to the user the columns to be filtered
+      print(f'\n\tChoose the columns to filter\n{titles}')
+      head_selection_1 = input('\nIdentifier    =>    ')
+      head_selection_2 = input('\nValues        =>    ')
 
     # Call the same function as the API to return the chart file
     chart_jpg = str(return_chart(head_selection_1,head_selection_2,chart_selection,path))

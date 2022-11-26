@@ -1,4 +1,4 @@
-# CSV to Chart
+# csv2chart
 
 An easy bar and pie charts generator base on a CSV file.
 It could be performed through the web browser or the command line.
@@ -24,9 +24,15 @@ If you don`t indicate the csv file, a default example data will be uploaded.
 
 + To execute throught the command line, you can execute as follow:
 
+	python3 main.py path_to_csv head_identifier head_values
+
+if you don`t declare heads, you will be redirected to a menu to choose the ones that you require.
+
+
 	python3 main.py path_to_csv
 
 If you don`t declare a csv file, an example data information will be displayed
+
 	python3 main.py
 
 
