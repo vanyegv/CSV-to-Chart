@@ -85,6 +85,7 @@ def return_chart(head_selection_1,head_selection_2,chart_selection,path):
 # Function to be executed by the terminal instead of the web api
 def run():
     # Validate if there isn`t a csv file as parameter
+    print(len(sys.argv))
     if len(sys.argv) == 1:
       path='./datasets/data.csv'  #As default it show an example dataset
     else:

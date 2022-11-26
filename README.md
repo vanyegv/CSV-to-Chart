@@ -5,17 +5,28 @@ It could be performed through the web browser or the command line.
 
 Installation:
 You need to clone into your local repository and start the virtual enviromental as follow:
-	'git clone git@github.com:vanyegv/General-API-for-CSV-Files.git
+	
+	git clone git@github.com:vanyegv/General-API-for-CSV-Files.git
 	cd General-API-for-CSV-Files && source env/bin/activate
-	pip3 -r requirements.txt'
+	pip3 -r requirements.txt
 
 Once dowloaded and started virtual enviroment with all dependencies, you have two option to execute the program through the web browser or through the command line: 
 
-	'uvicorn main:app --reload
-	https://127.0.0.1:800/api'
++ To execute through the web browser execute as follow to start the server service
+	
+	uvicorn main:app --reload
 
-	'https://127.0.0.1:800/api?path=path_to_csv'
+Now, the server is running, open your web browser and type the following URL:
 
-	'python3 main.py'
+	https://127.0.0.1:800/api?path=path_to_csv
 
-	'python3 main.py path_to_csv'
+If you don`t indicate the csv file, a default example data will be uploaded.
+
++ To execute throught the command line, you can execute as follow:
+
+	python3 main.py path_to_csv
+
+If you don`t declare a csv file, an example data information will be displayed
+	python3 main.py
+
+
