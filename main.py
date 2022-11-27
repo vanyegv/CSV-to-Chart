@@ -78,21 +78,26 @@ def return_chart(head_selection_1,head_selection_2,chart_selection,path):
 
 # Function to be executed by the terminal instead of the web api
 def run():
+    print(len(sys.argv))
     # Validate if there isn`t a csv file as parameter
-    if len(sys.argv) >= 1:
-      path='./datasets/data.csv'  #As default it show an example dataset
-    else:
-      path = sys.argv[1]          # If there is a parameter, then the name is assigned to path
-    
     if len(sys.argv) >= 2:
-      chart_selection = sys.argv[2]
+      path = sys.argv[1]          # If there is a parameter, then the name is assigned to path
+    else:
+      path='./datasets/data.csv'  #As default it show an example dataset
+    
+    print(path)
+
+    if len(sys.argv) >= 3:
+      chart_selection = str(sys.argv[2]).lower()   
     else:
       # Request to the user introduce a type of chart
       chart_selection = input(f'\n\tFile Name: {path}\n\tChoose your type of chart \n\tBar chart\tPie chart\n    =>    ').lower()
-    
+
+
+
     # Validation of the entry information
     if ('bar' not in chart_selection) and ('pie' not in chart_selection):
-        print('\n\tInvalid selection')    # In case information is invalid, the funtion will start again
+        print(f'\n\tInvalid selection {chart_selection}')    # In case information is invalid, the funtion will start again
         run()
     if 'bar' in chart_selection:          # Validate that there is a text bar
         type_chart = 'bar'
