@@ -37,7 +37,7 @@ If you don`t declare a csv file, an example data information will be displayed
 
 	python3 main.py
 
-*Screenshots*
+**Screenshots**
 
 	![Example from API] (/screenshoot1.png)
 
