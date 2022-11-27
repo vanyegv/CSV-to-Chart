@@ -11,10 +11,9 @@ You need to clone into your local repository and start the virtual enviromental 
 	source env/bin/activate
 	pip3 install -r requirements.txt
 
-*Usage*
+*Usage:*
 Once dowloaded and started virtual enviroment with all dependencies, you have two option to execute the program through the web browser or through the command line:
 + To execute through the web browser execute as follow to start the server service:
-
 	uvicorn main:app --reload
 
 Now, the server is running, open your web browser and type the following URL:
