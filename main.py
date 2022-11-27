@@ -61,48 +61,43 @@ def return_chart(head_selection_1,head_selection_2,chart_selection,path):
   # Open and read the specified file
   data = pd.read_csv(path)
   # Variable assignation from the API or the command line
-  titles = list(data.head(0))
   column1 = head_selection_1 
   column2 = head_selection_2 
   type_chart = chart_selection
-  
-  # Validation of the right selections
-  if (column1 in titles) and (column2 in titles) and ('pie' in type_chart or 'bar' in type_chart):
-    value1 = list(data[column1])
-    value2 = list(data[column2])
-    # Call the function to generate the chart in format jpg
-    chart = generate_charts(type_chart,value1,value2,column1,column2)
-    print(chart)                          # Print the path to the chart file
-    if __name__ == '__main__':            # Validate if the execution is trough command line or the API
-      return chart                        # If its command line just return the path to the chart file
-    else:
-      return FileResponse(chart)          # If its API will return the entire chart file
 
+  value1 = list(data[column1])
+  value2 = list(data[column2])
+  # Call the function to generate the chart in format jpg
+  chart = generate_charts(type_chart,value1,value2,column1,column2)
+  print(chart)                          # Print the path to the chart file
+  if __name__ == '__main__':            # Validate if the execution is trough command line or the API
+    return chart                        # If its command line just return the path to the chart file
   else:
-    print('Selection not valid\n')
-    if __name__ == '__main__':            # Validate if the execution is trough command line or the API
-      raise Exception('Selection not valid')                        # If its command line just return the path to the chart file
-    else:
-      assign_variables()
+    return FileResponse(chart)          # If its API will return the entire chart file
+
 
 # Function to be executed by the terminal instead of the web api
 def run():
-    # Validate if there isn`t a csv file as parameter
     print(len(sys.argv))
-    if len(sys.argv) >= 1:
-      path='./datasets/data.csv'  #As default it show an example dataset
-    else:
-      path = sys.argv[1]          # If there is a parameter, then the name is assigned to path
-    
+    # Validate if there isn`t a csv file as parameter
     if len(sys.argv) >= 2:
-      chart_selection = sys.argv[2]
+      path = sys.argv[1]          # If there is a parameter, then the name is assigned to path
+    else:
+      path='./datasets/data.csv'  #As default it show an example dataset
+    
+    print(path)
+
+    if len(sys.argv) >= 3:
+      chart_selection = str(sys.argv[2]).lower()   
     else:
       # Request to the user introduce a type of chart
       chart_selection = input(f'\n\tFile Name: {path}\n\tChoose your type of chart \n\tBar chart\tPie chart\n    =>    ').lower()
-    
+
+
+
     # Validation of the entry information
     if ('bar' not in chart_selection) and ('pie' not in chart_selection):
-        print('\n\tInvalid selection')    # In case information is invalid, the funtion will start again
+        print(f'\n\tInvalid selection {chart_selection}')    # In case information is invalid, the funtion will start again
         run()
     if 'bar' in chart_selection:          # Validate that there is a text bar
         type_chart = 'bar'
@@ -119,9 +114,25 @@ def run():
       # Define the first row as titles
       titles = list(data.head(0))
       # Show and request to the user the columns to be filtered
-      print(f'\n\tChoose the columns to filter\n{titles}')
-      head_selection_1 = input('\nIdentifier    =>    ')
-      head_selection_2 = input('\nValues        =>    ')
+      print(f'\n\tChoose the columns to filter\n')
+
+      n=0
+      for title in titles:
+        print(f'{n} : {title}')
+        n+=1
+
+      selection_1 = int(input('\nIdentifier    =>    '))
+      selection_2 = int(input('\nValues        =>    '))
+
+      if selection_1 > n or selection_1 < 0 or selection_2 > n or selection_1 < 0:
+        print('Selection not valid\n')
+        run()
+
+      head_selection_1 = titles[selection_1]
+      head_selection_2 = titles[selection_2]
+
+      print(f'Identifier: {head_selection_1}')
+      print(f'Values: {head_selection_2}')
 
     # Call the same function as the API to return the chart file
     chart_jpg = str(return_chart(head_selection_1,head_selection_2,chart_selection,path))
